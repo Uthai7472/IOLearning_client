@@ -13,6 +13,7 @@ const App = () => {
   const [number1, setNumber1] = useState(0);
   const [number2, setNumber2] = useState(0);
   const [receivedSum, setReceivedSum] = useState('');
+  const [randomNumber, setRandomNumber] = useState(0);
 
   useEffect(() => {
     socket.on('message', (data) => {
@@ -22,7 +23,11 @@ const App = () => {
     socket.on('add', (data) => {
       // console.log('Client received from server')
       setReceivedSum(`Client received from server: ${data}`);
-    })
+    });
+
+    socket.on('randomNumber', (data) => {
+      setRandomNumber(data);
+    });
 
     // return () => {
     //   socket.disconnect();
@@ -67,6 +72,10 @@ const App = () => {
       <p>Received sum: {receivedSum}</p>
 
       <button onClick={sumNumber}>Sum</button>
+
+      <hr />
+
+      <p>Current random number: {randomNumber}</p>
       
     </div>
   )
